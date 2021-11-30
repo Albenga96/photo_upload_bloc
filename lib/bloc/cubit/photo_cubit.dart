@@ -43,7 +43,9 @@ class PhotoCubit extends Cubit<PhotoState> {
         imageQuality: 85,
       )
           .then((image) {
-        emit(PhotoSelected(image: File(image!.path)));
+        image != null
+            ? emit(PhotoSelected(image: File(image.path)))
+            : emit(PhotoNotSelected());
       });
     } on PlatformException catch (_) {
       print("Camera access denied");
