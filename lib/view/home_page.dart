@@ -28,6 +28,9 @@ class _HomePageState extends State<HomePage> {
               children: [
                 InkWell(
                   onTap: () {
+                    if (state is PhotoUploaded) {
+                      context.read<PhotoCubit>().retakePhoto();
+                    }
                     context.read<PhotoCubit>().chooseFile(true);
                   },
                   child: CircleAvatar(

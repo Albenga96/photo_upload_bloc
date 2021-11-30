@@ -29,6 +29,10 @@ class PhotoCubit extends Cubit<PhotoState> {
             }));
   }
 
+  void retakePhoto() {
+    emit(PhotoNotSelected());
+  }
+
   Future<void> chooseFile(bool isCamera) async {
     await ImagePicker()
         .pickImage(source: isCamera ? ImageSource.camera : ImageSource.gallery)
