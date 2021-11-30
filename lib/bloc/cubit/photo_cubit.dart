@@ -35,7 +35,10 @@ class PhotoCubit extends Cubit<PhotoState> {
 
   Future<void> chooseFile(bool isCamera) async {
     await ImagePicker()
-        .pickImage(source: isCamera ? ImageSource.camera : ImageSource.gallery)
+        .pickImage(
+      source: isCamera ? ImageSource.camera : ImageSource.gallery,
+      imageQuality: 85,
+    )
         .then((image) {
       emit(PhotoSelected(image: File(image!.path)));
     });
