@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as Path;
@@ -34,13 +36,17 @@ class PhotoCubit extends Cubit<PhotoState> {
   }
 
   Future<void> chooseFile(bool isCamera) async {
-    await ImagePicker()
-        .pickImage(
-      source: isCamera ? ImageSource.camera : ImageSource.gallery,
-      imageQuality: 85,
-    )
-        .then((image) {
-      emit(PhotoSelected(image: File(image!.path)));
-    });
+    try {
+      await ImagePicker()
+          .pickImage(
+        source: isCamera ? ImageSource.camera : ImageSource.gallery,
+        imageQuality: 85,
+      )
+          .then((image) {
+        emit(PhotoSelected(image: File(image!.path)));
+      });
+    } on PlatformException catch (_) {
+      print("Camera access denied");
+    }
   }
 }
