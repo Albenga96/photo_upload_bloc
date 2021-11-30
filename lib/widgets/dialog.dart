@@ -26,7 +26,7 @@ class MyDialog extends StatelessWidget {
                 if (state is PhotoUploaded) {
                   context.read<PhotoCubit>().retakePhoto();
                 }
-                context.read<PhotoCubit>().chooseFile(true);
+                context.read<PhotoCubit>().chooseFile(false);
               },
               child: const Text("Galleria"),
             ),
