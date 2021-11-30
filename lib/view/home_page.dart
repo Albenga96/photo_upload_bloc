@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:photo_up/bloc/cubit/photo_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:photo_up/widgets/dialog.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -24,10 +25,8 @@ class _HomePageState extends State<HomePage> {
               children: [
                 InkWell(
                   onTap: () {
-                    if (state is PhotoUploaded) {
-                      context.read<PhotoCubit>().retakePhoto();
-                    }
-                    context.read<PhotoCubit>().chooseFile(true);
+                    showDialog(
+                        context: context, builder: (ctx) => const MyDialog());
                   },
                   child: CircleAvatar(
                     backgroundImage: state is PhotoUploaded
