@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
-import 'package:path/path.dart' as Path;
+import 'package:path/path.dart' as path;
 
 part 'photo_state.dart';
 
@@ -18,7 +18,7 @@ class PhotoCubit extends Cubit<PhotoState> {
     emit(UploadingPhoto());
     Reference storageReference = FirebaseStorage.instance
         .ref()
-        .child('images/${Path.basename(imageFile.path)}}');
+        .child('images/${path.basename(imageFile.path)}}');
     UploadTask uploadTask = storageReference.putFile(imageFile);
     await uploadTask
         .whenComplete(() => storageReference.getDownloadURL().then((fileURL) {
