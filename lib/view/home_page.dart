@@ -42,7 +42,41 @@ class _HomePageState extends State<HomePage> {
                     onPressed: state is UploadingPhoto
                         ? null
                         : () {
-                            context.read<PhotoCubit>().uploadFile();
+                            if (state is PhotoSelected) {
+                              context.read<PhotoCubit>().uploadFile();
+                            } else if (state is PhotoUploaded) {
+                              showDialog(
+                                  context: context,
+                                  builder: (ctx) => AlertDialog(
+                                        title: const Text("Errore"),
+                                        content: const Text(
+                                            "Stai caricando la stessa foto due volte"),
+                                        actions: [
+                                          TextButton(
+                                            child: const Text("Ok"),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          )
+                                        ],
+                                      ));
+                            } else {
+                              showDialog(
+                                  context: context,
+                                  builder: (ctx) => AlertDialog(
+                                        title: const Text("Errore"),
+                                        content:
+                                            const Text("Foto non selezionata"),
+                                        actions: [
+                                          TextButton(
+                                            child: const Text("Ok"),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          )
+                                        ],
+                                      ));
+                            }
                           },
                     child: state is UploadingPhoto
                         ? const CircularProgressIndicator()
